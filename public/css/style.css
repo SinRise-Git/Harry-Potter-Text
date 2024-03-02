@@ -1,0 +1,145 @@
+@font-face {
+    font-family: old-book;
+    src: url(/fonts/HARRYP__.TTF);
+}
+
+html{
+    height: 100vh;
+}
+
+body{
+    background-color: bisque;
+    font-weight: bold;
+    margin: 0px;
+    font-family: old-book, sans-serif;
+    background-image: url(/images/7d0a243b0ab7012dfd45e7584d919009.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+}
+
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content{
+    padding: 20px;
+}
+
+p {
+    color: #2F2420;
+    margin: 0px;
+    font-size: 4vw;
+    text-align: center;
+}
+
+#text-container {
+    max-width: 50vw;
+}
+
+#text-container div {
+    display: inline-block; 
+    margin: 0px;
+    padding: 0px;
+}
+  
+#text-container div p {
+    text-align: center;
+    margin: 0px; 
+    padding: 0px;
+    font-size: 3vw;
+}
+
+
+#input-container textarea {
+    background-color: transparent;
+    border: none;
+    margin: 0px;
+    padding: 0px;
+    font-family: old-book, sans-serif;
+    font-size: 3vw;
+    width: 50vw;
+    height: 90vh;
+    resize: none;
+    outline: none;
+    overflow: hidden;
+}
+
+.text-animation-fadein {
+    transition: opacity 1s ease;
+    animation-name: text-animation-fadein;
+    animation-delay: 0;
+    animation-iteration-count: 1;
+    animation-direction: forward;
+}
+
+.text-animation-fadeout {
+    transition: opacity 1s ease;
+    animation-name: text-animation-fadeout;
+    animation-delay: 0;
+    animation-iteration-count: 1;
+    animation-direction: forward;
+}
+
+.input-fadeout-animation {
+    transition: opacity 1s ease;
+    animation-duration: 2.25s ;
+    animation-name: input-fadeout-animation;
+    animation-delay: 0;
+    animation-iteration-count: 1;
+    animation-direction: forward;
+}
+
+.input-fadein-animation {
+    transition: opacity 1s ease;
+    animation-duration: 2.25s ;
+    animation-name: input-fadein-animation;
+    animation-delay: 0;
+    animation-iteration-count: 1;
+    animation-direction: forward;
+}
+
+@keyframes input-fadeout-animation{
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes input-fadein-animation{
+    0% {
+        opacity: 0
+    }
+        
+    100% { 
+        opacity: 1;
+    }
+
+}
+
+
+@keyframes text-animation-fadein{
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+
+}
+
+@keyframes text-animation-fadeout{
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+
+}

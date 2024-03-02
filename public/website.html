@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div class="main">
+      <div class="content">
+        <p id="header"> Ask something, maybe someone will answer? </p>
+        <div id="input-container">
+          <textarea id="inputText" placeholder="Ask something.."  autocomplete="off"></textarea>
+        </div>
+        <div class="text-container" id="text-container">    
+        </div>
+      </div>
+    </div>
+<script>
+let active = true
+function attachEnterListener(element) {
+  element.addEventListener("keydown", function(event) {
+      if (event.key === "Enter" && active == true) {
+          displayResponse();
+          getResponse()
+          active = false
+      }
+  });
+}
+
+let inputText = document.getElementById("inputText");
+attachEnterListener(inputText);
+
+async function getResponse(){
+  const inputText = document.getElementById("inputText").value;
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ prompt: inputText })
+  };
+  let response = await fetch('/getResponse', requestOptions)
+  let data = await response.json()
+  setTimeout(function(){
+    afterResponse(data.outputText)
+  }, 2250)
+}
+
+function displayResponse(){
+  let inputDiv = document.getElementById("input-container");
+  inputDiv.classList.remove("input-fadein-animation")
+  inputDiv.classList.add("input-fadeout-animation");
+  inputDiv.addEventListener("animationend", handleAnimationEnd);
+  function handleAnimationEnd() {
+    let inputDiv = document.getElementById("input-container");
+    inputDiv.innerHTML = "";
+    inputDiv.removeEventListener("animationend", handleAnimationEnd);
+  }
+};
+
+function afterResponse(text) {
+  let index = 0;
+  let inputDiv = document.getElementById("input-container");
+  let textContainer = document.querySelector(".text-container");
+  inputDiv.classList.remove("input-fadeout-animation");
+  let newElementInput = document.createElement("textarea");
+  newElementInput.id = "inputText";
+  newElementInput.placeholder = "Ask something...";
+  attachEnterListener(newElementInput);
+  let interval = setInterval(function() {
+     if (index <= text.length) {
+        let textDiv = document.createElement("div");
+        let paragraph = document.createElement("p");
+        let letter = text.charAt(index);
+        paragraph.textContent = letter;
+        if (letter === " " && index >= 3) {
+           textDiv.style.marginRight = '5px';
+           textDiv.style.marginLeft = '5px';
+        }
+        textDiv.className = "text-animation-fadein";
+        textDiv.style.animationDuration = "4s";
+        textDiv.appendChild(paragraph);
+        textContainer.appendChild(textDiv);
+        index++;
+     } else {
+        clearInterval(interval);
+        textContainer.classList.remove("text-container");
+        textContainer.classList.add("text-animation-fadeout");
+        textContainer.style.animationDuration = "3s";
+        setTimeout(function(){
+          textContainer.classList.add("text-container");
+          textContainer.classList.remove("text-animation-fadeout");
+          textContainer.innerHTML = ""
+          inputDiv.appendChild(newElementInput);
+          inputDiv.classList.add("input-fadein-animation");
+          active = true
+        }, 3000)
+     }
+  }, 100);
+}
+</script>
+</body>
+</html>
